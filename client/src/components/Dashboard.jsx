@@ -3,8 +3,8 @@ import React from "react";
 import Web3 from "web3";
 import Vibe from "../contracts/Vibe.json";
 
-import Navigation from "./Navigation.jsx";
 import ClassItem from "./subcomponents/ClassItem.jsx";
+import Enroll from "./subcomponents/Enroll.jsx";
 import Study from "./subcomponents/Study.jsx";
 import Teach from "./subcomponents/Teach.jsx";
 import New from "./subcomponents/New.jsx";
@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: true,
+      view: 0,
       account: "0x0",
       bio: "I am a great person who likes learning. That's all you need to know for now.",
       classesTaughtBy: [],
@@ -78,7 +78,9 @@ class Dashboard extends React.Component {
 
   render() {
     let view;
-    if (this.state.view) {
+    if (this.state.view == 0) {
+      view = <Enroll />
+    } else if (this.state.view == 1) {
       view  = <Study classesStudiedBy={this.state.classesStudiedBy} />;
     } else {
       view = <Teach classesTaughtBy={this.state.classesTaughtBy}/>;
@@ -86,10 +88,10 @@ class Dashboard extends React.Component {
 
     return(
       <div className="dashboard">
-      <Navigation />
       <div className="bio">
-      <button onClick={()=> {this.setState({view: true})}}>Study</button>
-      <button onClick={()=> {this.setState({view: false})}}>Teach</button>
+      <button onClick={()=> {this.setState({view: 0})}}>Enroll</button>
+      <button onClick={()=> {this.setState({view: 1})}}>Study</button>
+      <button onClick={()=> {this.setState({view: 2})}}>Teach</button>
       </div>
       <div className="view">
       {view}

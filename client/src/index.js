@@ -5,7 +5,6 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "./components/Home.jsx";
-import Enroll from "./components/Enroll.jsx";
 import Dashboard from "./components/Dashboard";
 import Class from "./components/Class";
 import Lesson from "./components/Lesson";
@@ -16,7 +15,6 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       <Route path="/home" component={Home} />
-      <Route path="/commence-operation-learn" component={Enroll} />
       <Route path="/mission-control" component={Dashboard} />
       <Route path="/class" component={Class} />
       <Route path="/learn" component={Lesson} />
