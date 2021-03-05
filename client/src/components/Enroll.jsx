@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation.jsx";
 
 class Enroll extends React.Component {
   constructor(props) {
@@ -9,7 +10,9 @@ class Enroll extends React.Component {
 
   render() {
     return(
-      <div></div>
+      <div>
+      <Navigation />
+      </div>
     )
   }
 }

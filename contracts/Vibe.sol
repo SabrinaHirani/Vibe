@@ -8,6 +8,7 @@ pragma experimental ABIEncoderV2;
 contract Vibe {
 
   struct Class {
+    uint256 id;
     string name;
     address payable teacher;
     uint256 price;
@@ -111,7 +112,7 @@ contract Vibe {
       assert(price <= 1000000);
       assert(bytes(description).length <= 200);
 
-      classes.push(Class(name, msg.sender, price, 0, description, new address[](0), new address[](0), new uint256[](0)));
+      classes.push(Class(classes.length, name, msg.sender, price, 0, description, new address[](0), new address[](0), new uint256[](0)));
       classesTaughtBy[msg.sender].push(classes.length);
     }
 
@@ -137,8 +138,9 @@ contract Vibe {
       classesStudiedBy[msg.sender].push(i);
     }
 
-    function getRating(uint256 i, uint256 r) public {
+    function addRating(uint256 i, uint256 r) public {
       assert(i <= classes.length);
+      assert(hasPurchasedClass(i));
       assert(!hasRatedClass(i));
       assert(i <= 5);
 

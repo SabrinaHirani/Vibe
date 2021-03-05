@@ -13,6 +13,11 @@
       "name": "classes",
       "outputs": [
         {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
           "internalType": "string",
           "name": "name",
           "type": "string"
@@ -143,6 +148,11 @@
       "outputs": [
         {
           "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
             {
               "internalType": "string",
               "name": "name",
@@ -492,7 +502,7 @@
           "type": "uint256"
         }
       ],
-      "name": "getRating",
+      "name": "addRating",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
