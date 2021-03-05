@@ -96,6 +96,8 @@ class Dashboard extends React.Component {
       <div className="view">
       {view}
       </div>
+      <div className="ariel">
+      </div>
       </div>
     )
   }
