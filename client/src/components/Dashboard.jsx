@@ -17,9 +17,8 @@ class Dashboard extends React.Component {
     this.state = {
       view: 0,
       account: "0x0",
-      bio: "I am a great person who likes learning. That's all you need to know for now.",
-      classesTaughtBy: [],
-      classesStudiedBy:[]
+      classesStudiedBy:[],
+      classesTaughtBy: []
     }
 
     window.ethereum.enable()
@@ -30,47 +29,58 @@ class Dashboard extends React.Component {
       }).then(() => {
         this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
         this.Vibe.setProvider(web3.currentProvider);
-        this.Vibe.methods.classesTaughtByCount(this.state.account).call()
-        .then((t)=>{
-          for (var i = 0; i < t; i++) {
-            this.Vibe.methods.getClassesTaughtBy(this.state.count, i).call()
-            .then((j)=> {
-              this.Vibe.methods.getClass(j)
-            }).then((Class) => {
-              this.state.classesTaughtBy.push(
-                <ClassItem
-                key={this.state.classesTaughtBy.length}
-                name={Class.name}
-                teacher={Class.teacher}
-                price={Class.price}
-                rating={Class.rating}
-                description={Class.description}
-                />
-              )
-              this.setState({classesTaughtBy: this.state.classesTaughtBy});
-            })
-          }
-        })
         this.Vibe.methods.classesStudiedByCount(this.state.account).call()
-        .then((t)=>{
-          for (var i = 0; i < t; i++) {
+        .then((classesStudiedByCount) => {
+          for (var i = 0; i < classesStudiedByCount; i++) {
             this.Vibe.methods.getClassesStudiedBy(this.state.count, i).call()
-            .then((j)=> {
-              this.Vibe.methods.getClass(j)
-            }).then((Class) => {
-              this.state.classesStudiedBy.push(
-                <ClassItem
-                key={this.state.classesStudiedBy.length}
-                name={Class.name}
-                teacher={Class.teacher}
-                price={Class.price}
-                rating={Class.rating}
-                description={Class.description}
-                />
-              )
-              this.setState({classesStudiedBy: this.state.classesStudiedBy});
+            .then((j) => {
+              this.Vibe.methods.getClass(j).call()
+              .then((Class) => {
+                this.state.classesStudiedBy.push(
+                  <ClassItem
+                  key={this.state.classes.length}
+                  id={Class.id}
+                  name={Class.name}
+                  teacher={Class.teacher}
+                  price={Class.price}
+                  rating={Class.rating}
+                  description={Class.description}
+                  students={Class.students}
+                  raters={Class.raters}
+                  lessons={Class.lessons}
+                  />
+                )
+                this.setState({classesStudiedBy: this.state.classesStudiedBy});
+              })
             })
           }
+        }).then(() =>{
+          this.Vibe.methods.classesTaughtByCount(this.state.account).call()
+          .then((classesTaughtByCount) => {
+            for (var i = 0; i < classesTaughtByCount; i++) {
+              this.Vibe.methods.getClassesTaughtBy(this.state.count, i).call()
+              .then((j) => {
+                this.Vibe.methods.getClass(j).call()
+                .then((Class) => {
+                  this.state.classesTaughtBy.push(
+                    <ClassItem
+                    key={this.state.classes.length}
+                    id={Class.id}
+                    name={Class.name}
+                    teacher={Class.teacher}
+                    price={Class.price}
+                    rating={Class.rating}
+                    description={Class.description}
+                    students={Class.students}
+                    raters={Class.raters}
+                    lessons={Class.lessons}
+                    />
+                  )
+                  this.setState({classesTaughtBy: this.state.classesTaughtBy});
+                })
+              })
+            }
+          })
         })
       })
     })

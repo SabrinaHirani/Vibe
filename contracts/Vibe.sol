@@ -116,6 +116,9 @@ contract Vibe {
       classesTaughtBy[msg.sender].push(classes.length);
     }
 
+    //TODO function editClass
+    //TODO function deleteClass
+
     function addLesson(uint256 i, string memory name, string memory content, string memory description)  public {
       assert(i <= classes.length);
       assert(bytes(name).length > 0);
@@ -125,6 +128,9 @@ contract Vibe {
       lessons.push(Lesson(i, name, content, description));
       classes[i].lessons.push(lessons.length);
     }
+
+    //TODO function editLesson
+    //TODO function deleteLesson
 
     function purchaseClass(uint256 i) public payable {
       assert(i <= classes.length);
@@ -148,3 +154,6 @@ contract Vibe {
       classes[i].raters.push(msg.sender);
     }
   }
+
+  //TODO addComments
+  //TODO addForum
