@@ -16,18 +16,22 @@ contract Vibe {
     string description;
     address[] students;
     address[] raters;
-    uint256[] lessons;
   }
 
   struct Lesson {
-    uint256 c;
     string name;
     string content;
     string description;
   }
 
+  struct Chat {
+    address sender;
+    string msg;
+  }
+
     Class[] public classes;
-    Lesson[] public lessons;
+    Lesson[][] public lessons;
+    Chat[][] public chatroom;
 
     mapping(address => uint256[]) public classesTaughtBy;
     mapping(address => uint256[]) public classesStudiedBy;
@@ -41,14 +45,20 @@ contract Vibe {
         return classes[i];
     }
 
-    function getLesson(uint256 i) public view returns (Lesson memory) {
-      assert(i <= lessons.length);
+    function getLesson(uint256 i, uint256 j) public view returns (Lesson memory) {
+      assert(i <= lessons[i].length);
 
-        return lessons[i];
+        return lessons[i][j];
     }
 
     function getClassCount() public view returns (uint256) {
         return classes.length;
+    }
+
+    function getLessonCount(uint256 i) public view returns (uint256) {
+      assert(i <= lessons.length);
+
+        return lessons[i].length;
     }
 
     function classesTaughtByCount(address user) public view returns (uint256) {
@@ -69,6 +79,19 @@ contract Vibe {
       assert(i <= classesStudiedByCount(user));
 
         return classesStudiedBy[user][i];
+    }
+
+    function getChat(uint256 i, uint256 j) public view returns (Chat memory) {
+      assert(i <= chatroom.length);
+      assert(j <= chatroom[i].length);
+
+      return chatroom[i][j];
+    }
+
+    function classChatCount(uint256 i) public view returns (uint256) {
+      assert(i <= chatroom.length);
+
+      return chatroom[i].length;
     }
 
     function isTeacher(uint256 i) public view returns (bool) {
@@ -109,28 +132,86 @@ contract Vibe {
     function createClass(string memory name, uint256 price, string memory description) public {
       assert(bytes(name).length > 0);
       assert(bytes(name).length <= 20);
+      assert(price >= 0);
       assert(price <= 1000000);
-      assert(bytes(description).length <= 200);
+      assert(bytes(description).length <= 2000);
 
-      classes.push(Class(classes.length, name, msg.sender, price, 0, description, new address[](0), new address[](0), new uint256[](0)));
+      classes.push(Class(classes.length, name, msg.sender, price, 0, description, new address[](0), new address[](0)));
       classesTaughtBy[msg.sender].push(classes.length);
     }
 
-    //TODO function editClass
-    //TODO function deleteClass
+    function editClassName(uint256 i, string memory n) public {
+      assert(i <= classes.length);
+      assert(bytes(n).length > 0);
+      assert(bytes(n).length <= 20);
+      assert(isTeacher(i));
+
+      classes[i].name = n;
+    }
+
+    function editClassPrice(uint256 i, uint256 p) public {
+      assert(i <= classes.length);
+      assert(p >= 0);
+      assert(p <= 1000000);
+      assert(isTeacher(i));
+
+      classes[i].price = p;
+    }
+
+    function editClassDescription(uint256 i, string memory d) public {
+      assert(i <= classes.length);
+      assert(bytes(d).length > 0);
+      assert(bytes(d).length <= 2000);
+      assert(isTeacher(i));
+
+      classes[i].description = d;
+    }
 
     function addLesson(uint256 i, string memory name, string memory content, string memory description)  public {
       assert(i <= classes.length);
       assert(bytes(name).length > 0);
       assert(bytes(name).length <= 20);
-      assert(bytes(description).length <= 200);
+      assert(bytes(description).length <= 20000);
+      assert(isTeacher(i));
 
-      lessons.push(Lesson(i, name, content, description));
-      classes[i].lessons.push(lessons.length);
+      lessons[i].push(Lesson(name, content, description));
     }
 
-    //TODO function editLesson
-    //TODO function deleteLesson
+    function editLessonName(uint256 i, uint256 j, string memory n) public {
+      assert(i <= classes.length);
+      assert(j <= lessons[i].length);
+      assert(bytes(n).length > 0);
+      assert(bytes(n).length <= 20);
+      assert(isTeacher(i));
+
+      lessons[i][j].name = n;
+    }
+
+    function editLessonContent(uint256 i, uint256 j, string memory c) public {
+      assert(i <= classes.length);
+      assert(j <= lessons[i].length);
+      assert(isTeacher(i));
+
+      lessons[i][j].content = c;
+    }
+
+    function editLessonDescription(uint256 i, uint256 j, string memory d) public {
+      assert(i <= classes.length);
+      assert(j <= lessons[i].length);
+      assert(bytes(d).length > 0);
+      assert(bytes(d).length <= 20000);
+      assert(isTeacher(i));
+
+      lessons[i][j].description = d;
+    }
+
+    function deleteLesson(uint256 i, uint256 j) public {
+      assert(i <= classes.length);
+      assert(j <= lessons[i].length);
+      assert(isTeacher(i));
+
+      delete lessons[i][j];
+    }
 
     function purchaseClass(uint256 i) public payable {
       assert(i <= classes.length);
@@ -153,7 +234,13 @@ contract Vibe {
       classes[i].rating + r/classes[i].raters.length + 1;
       classes[i].raters.push(msg.sender);
     }
-  }
 
-  //TODO addComments
-  //TODO addForum
+    function chat(uint256 i, string memory m) public payable {
+      assert(i <= classes.length);
+      assert(hasPurchasedClass(i));
+      assert(bytes(m).length > 0);
+      assert(bytes(m).length <= 200);
+
+      chatroom[i].push(Chat(msg.sender, m));
+    }
+  }

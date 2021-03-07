@@ -1,0 +1,151 @@
+/* General Styles */
+
+@font-face {
+  font-family: "Nunito";
+  src: url("./media/fonts/Nunito/Nunito-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nunito--bold";
+  src: url("./media/fonts/Nunito/Nunito-Bold.ttf") format("truetype");
+}
+
+h1, h2, h3, h4, h5, h6, p, div, span {
+  font-family: "Nunito";
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  font-family: "Nunito--bold";
+}
+
+a {
+  text-decoration: none;
+}
+
+:focus {
+  outline: none;
+}
+
+body {
+  background-color: #fff;
+  font-family: "Nunito";
+}
+
+:root {
+  --color-mandys-pink: #f2bbad;
+  --color-cinderella: #fbdcce;
+  --color-cararra: #eceae5;
+  --color-aqua-island: #fed0bb;
+  --color-tamarind: #afdfdb;
+  --color-downy: #75c9cc;
+}
+
+/*Dashboard Styles*/
+
+.dashboard {
+  margin-top: 40px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.heading-main {
+  font-size: 40px;
+  margin-left: 80%;
+}
+
+.logo {
+  width: 5%;
+  height: auto;
+}
+
+.account-address {
+  color: var(--color-cinderella);
+  margin-top: 0px;
+  margin-left: 60%;
+}
+
+.settings {
+  margin-left: 72%;
+}
+
+.setting-toggle {
+  margin-right: 50px;
+}
+
+.setting-toggle:hover, .setting-toggle:focus, .setting-toggle:active {
+  color: var(--color-downy);
+  border-bottom: 1px solid var(--color-downy);
+}
+
+/*Class Item Styles*/
+
+.class-item {
+  border: 1px solid var(--color-downy);
+  border-radius: 25px;
+  margin: 10px;
+  padding: 20px;
+}
+
+.class-item-heading {
+  font-family: "Nunito";
+  font-size: 25px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.class-item-teacher {
+  margin-top: 0px;
+  font-size: 14px;
+  font-family: "Nunito--bold";
+}
+
+.address-style {
+  color: var(--color-cinderella);
+}
+
+.class-item-description {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.class-item-action:hover, .class-item-action:focus,  .class-item-action:active {
+  color: var(--color-downy);
+  border-bottom: 1px solid var(--color-downy);
+}
+
+/*Class Styles*/
+
+.class-name {
+  font-size: 40px;
+  margin-left: 60%;
+  margin-bottom: 0px;
+}
+
+.class-teacher {
+  margin-left: 76%;
+  margin-top: 0px;
+  font-size: 18px;
+}
+
+.class-description {
+    margin-left: 50%;
+}
+
+.class-rating {
+  margin-left: 78%
+}
+
+.class-purchase-class-action {
+  background-color: #000;
+  color: #fff;
+  padding: 7px;
+  border-radius: 25px;
+  margin-left: 78%;
+}
+
+.class-purchase-class-action:hover, .class-purchase-class-action:focus, .class-purchase-class-action:active {
+  background-color: #fff;
+  color: #000;
+}

@@ -8,6 +8,37 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "chatroom",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "msg",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "name": "classes",
@@ -106,15 +137,15 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "name": "lessons",
       "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "c",
-          "type": "uint256"
-        },
         {
           "internalType": "string",
           "name": "name",
@@ -187,11 +218,6 @@
               "internalType": "address[]",
               "name": "raters",
               "type": "address[]"
-            },
-            {
-              "internalType": "uint256[]",
-              "name": "lessons",
-              "type": "uint256[]"
             }
           ],
           "internalType": "struct Vibe.Class",
@@ -210,17 +236,17 @@
           "internalType": "uint256",
           "name": "i",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
         }
       ],
       "name": "getLesson",
       "outputs": [
         {
           "components": [
-            {
-              "internalType": "uint256",
-              "name": "c",
-              "type": "uint256"
-            },
             {
               "internalType": "string",
               "name": "name",
@@ -250,6 +276,27 @@
       "constant": true,
       "inputs": [],
       "name": "getClassCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLessonCount",
       "outputs": [
         {
           "internalType": "uint256",
@@ -362,6 +409,65 @@
           "internalType": "uint256",
           "name": "i",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
+        }
+      ],
+      "name": "getChat",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Vibe.Chat",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        }
+      ],
+      "name": "classChatCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
         }
       ],
       "name": "isTeacher",
@@ -453,6 +559,66 @@
         },
         {
           "internalType": "string",
+          "name": "n",
+          "type": "string"
+        }
+      ],
+      "name": "editClassName",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "p",
+          "type": "uint256"
+        }
+      ],
+      "name": "editClassPrice",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "d",
+          "type": "string"
+        }
+      ],
+      "name": "editClassDescription",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
           "name": "name",
           "type": "string"
         },
@@ -468,6 +634,101 @@
         }
       ],
       "name": "addLesson",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "n",
+          "type": "string"
+        }
+      ],
+      "name": "editLessonName",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "c",
+          "type": "string"
+        }
+      ],
+      "name": "editLessonContent",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "d",
+          "type": "string"
+        }
+      ],
+      "name": "editLessonDescription",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "j",
+          "type": "uint256"
+        }
+      ],
+      "name": "deleteLesson",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -506,6 +767,26 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "m",
+          "type": "string"
+        }
+      ],
+      "name": "chat",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
       "type": "function"
     }
   ]
