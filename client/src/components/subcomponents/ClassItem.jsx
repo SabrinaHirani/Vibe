@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Web3 from "web3";
+import Vibe from "../../contracts/Vibe.json";
+
+import Rating from "./Rating.jsx";
+
+const web3 = new Web3(window.ethereum);
+
 class ClassItem extends React.Component {
   constructor(props) {
     super(props);
@@ -12,13 +19,50 @@ class ClassItem extends React.Component {
       rating: this.props.rating,
       description: this.props.description
     }
+
+    window.ethereum.enable()
+    .then(() => {
+      web3.eth.getAccounts()
+      .then((accounts) => {
+        this.setState({account: accounts[0]});
+      }).then(() => {
+        this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
+        this.Vibe.setProvider(web3.currentProvider);
+        this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {
+          if (!r) {
+            this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.account }).then((r) => {
+              if (!r) {
+                this.setState({hasAccess: true});
+              }
+            })
+          }
+        })
+      })
+    })
+
+    this.purchaseClass = this.purchaseClass.bind(this);
   }
+
+  async purchaseClass() {
+    this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
+    this.Vibe.setProvider(web3.currentProvider);
+    this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {
+      if (!r){
+        this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.account }).then((r) => {
+          if (!r) {
+            this.Vibe.methods.purchaseClass(this.state.id).send({ from: this.account, value: this.state.price, gas: 5000000 });
+            }
+          })
+        }
+      })
+    }
 
   render() {
     return(
       <div className="class-item">
       <p className="class-item-heading">{this.state.name}</p>
       <p className="class-item-teacher">by <span className="address-style">{this.state.teacher}</span></p>
+      <Rating rating={this.state.rating} size={15} />
       <p className="class-item-description">{this.state.description}</p>
       <Link to={{
                             pathname: "/class",
@@ -31,6 +75,19 @@ class ClassItem extends React.Component {
                               description: this.state.description,
                             },
                           }}><button className="class-item-action">More</button></Link>
+    <div>
+    <Link to={{
+                          pathname: "/class",
+                          state: {
+                            id: this.state.id,
+                            name: this.state.name,
+                            teacher: this.state.teacher,
+                            price: this.state.price,
+                            rating: this.state.rating,
+                            description: this.state.description,
+                          },
+                        }}><button className="class-item-purchase-class-action" onClick={this.purchaseClass()} >Purchase for {this.state.price} wei</button></Link>
+      </div>
       </div>
     )
   }

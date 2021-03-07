@@ -68,7 +68,7 @@ class Class extends React.Component {
       <p className="class-name">{this.state.name}</p>
       <p className="class-teacher">by <span className="address-style">{this.state.teacher}</span></p>
       <div className="class-rating">
-      <Rating rating={this.state.rating} />
+      <Rating rating={this.state.rating} size={24}/>
       </div>
       <p className="class-description">{this.state.description}</p>
       <div className="locked-view">
