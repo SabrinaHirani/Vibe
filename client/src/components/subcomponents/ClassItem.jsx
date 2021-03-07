@@ -29,11 +29,11 @@ class ClassItem extends React.Component {
       }).then(() => {
         this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
         this.Vibe.setProvider(web3.currentProvider);
-        this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {
+        this.Vibe.methods.isTeacher(this.state.id).call({ from: this.state.account }).then((r) => {
           if (r) {
             this.setState({hasAccess: 2});
           } else {
-            this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.account }).then((r) => {
+            this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.state.account }).then((r) => {
               if (r) {
                 this.setState({hasAccess: 1});
               }
@@ -156,7 +156,7 @@ class ClassItem extends React.Component {
                               rating: this.state.rating,
                               description: this.state.description,
                             },
-                          }}><button className="class-item-purchase-class-action" onClick={this.purchaseClass} >Continue Studying</button></Link>
+                          }}><button className="class-item-purchase-class-action" onClick={this.purchaseClass} >Continue Teaching</button></Link>
         </div>
         </div>
       )
