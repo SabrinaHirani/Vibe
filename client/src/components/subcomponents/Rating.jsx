@@ -8,11 +8,11 @@ class Rating extends React.Component {
       rating: this.props.rating,
       size: this.props.size,
       stars: [
-        <Star color="#e3e3e3" size={this.props.size} />,
-        <Star color="#e3e3e3" size={this.props.size} />,
-        <Star color="#e3e3e3" size={this.props.size} />,
-        <Star color="#e3e3e3" size={this.props.size} />,
-        <Star color="#e3e3e3" size={this.props.size} />
+        <Star key={1} color="#e3e3e3" size={this.props.size} />,
+        <Star key={2} color="#e3e3e3" size={this.props.size} />,
+        <Star key={3} color="#e3e3e3" size={this.props.size} />,
+        <Star key={4} color="#e3e3e3" size={this.props.size} />,
+        <Star key={5} color="#e3e3e3" size={this.props.size} />
       ]
     }
   }

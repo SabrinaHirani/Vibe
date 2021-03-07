@@ -46,19 +46,25 @@ class ClassItem extends React.Component {
     this.purchaseClass = this.purchaseClass.bind(this);
   }
 
+  // async purchaseClass() {
+  //   this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
+  //   this.Vibe.setProvider(web3.currentProvider);
+  //   this.Vibe.methods.isTeacher(this.state.id).call({ from: this.state.account }).then((r) => {
+  //     if (!r){
+  //       this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.state.account }).then((r) => {
+  //         if (!r) {
+  //           this.Vibe.methods.purchaseClass(this.state.id).send({ from: this.state.account, value: this.state.price, gas: 5000000 });
+  //           }
+  //         })
+  //       }
+  //     })
+  //   }
+
   async purchaseClass() {
     this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
-    this.Vibe.setProvider(web3.currentProvider);
-    this.Vibe.methods.isTeacher(this.state.id).call({ from: this.state.account }).then((r) => {
-      if (!r){
-        this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.state.account }).then((r) => {
-          if (!r) {
-            this.Vibe.methods.purchaseClass(this.state.id).send({ from: this.state.account, value: this.state.price, gas: 5000000 });
-            }
-          })
-        }
-      })
-    }
+   this.Vibe.setProvider(web3.currentProvider);
+   this.Vibe.methods.addLesson(0, "Introduction", "Qmf6hpJLxvQbEkLMFtGKehyt7hyE6ksVW8fRVEwGTfXLJ5", "This is the introduction.").send({ from: this.state.account, gas: 5000000 });
+  }
 
   render() {
     if (this.state.hasAccess == 0) {
