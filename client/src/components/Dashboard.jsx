@@ -15,9 +15,7 @@ class Dashboard extends React.Component {
     this.state = {
       view: 0,
       account: "0x0",
-      classes: [
-                <ClassItem id={0} name={"Golang Networking"} teacher={"sabrina hirani"} price={6} rating={4} description={"This is description"} />
-      ],
+      classes: [],
       classesStudiedBy:[],
       classesTaughtBy: []
     }
@@ -30,10 +28,10 @@ class Dashboard extends React.Component {
       }).then(() => {
         this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
         this.Vibe.setProvider(web3.currentProvider);
-        this.Vibe.methods.classesStudiedByCount(this.state.account).call()
+        this.Vibe.methods.classesStudiedByCount(this.state.account).call({ from: this.state.account })
         .then((classesStudiedByCount) => {
           for (var i = 0; i < classesStudiedByCount; i++) {
-            this.Vibe.methods.getClassesStudiedBy(this.state.count, i).call()
+            this.Vibe.methods.getClassesStudiedBy(this.state.account, i).call({ from: this.state.account })
             .then((j) => {
               this.Vibe.methods.getClass(j).call()
               .then((Class) => {
@@ -53,12 +51,12 @@ class Dashboard extends React.Component {
             })
           }
         }).then(() =>{
-          this.Vibe.methods.classesTaughtByCount(this.state.account).call()
+          this.Vibe.methods.classesTaughtByCount(this.state.account).call({ from: this.state.account })
           .then((classesTaughtByCount) => {
             for (var i = 0; i < classesTaughtByCount; i++) {
-              this.Vibe.methods.getClassesTaughtBy(this.state.count, i).call()
+              this.Vibe.methods.getClassesTaughtBy(this.state.account, i).call({ from: this.state.account })
               .then((j) => {
-                this.Vibe.methods.getClass(j).call()
+                this.Vibe.methods.getClass(j-1).call()
                 .then((Class) => {
                   this.state.classesTaughtBy.push(
                     <ClassItem
@@ -78,24 +76,25 @@ class Dashboard extends React.Component {
           })
         }).then(() => {
           this.Vibe.methods.getClassCount().call()
-        }).then((classCount) => {
-          for (var i = 0; i < classCount; i++) {
-            this.Vibe.methods.getClass(i).call()
-            .then((Class) => {
-              this.state.classes.push(
-                <ClassItem
-                key={this.state.classes.length}
-                id={Class.id}
-                name={Class.name}
-                teacher={Class.teacher}
-                price={Class.price}
-                rating={Class.rating}
-                description={Class.description}
-                />
-              )
-              this.setState({classes: this.state.classes});
-            })
-          }
+            .then((classCount) => {
+            for (var i = 0; i < classCount; i++) {
+              this.Vibe.methods.getClass(i).call()
+              .then((Class) => {
+                this.state.classes.push(
+                  <ClassItem
+                  key={this.state.classes.length}
+                  id={Class.id}
+                  name={Class.name}
+                  teacher={Class.teacher}
+                  price={Class.price}
+                  rating={Class.rating}
+                  description={Class.description}
+                  />
+                )
+                this.setState({classes: this.state.classes});
+              })
+            }
+          })
         })
       })
     })

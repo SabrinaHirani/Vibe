@@ -40,8 +40,6 @@ contract Vibe {
 
 
     function getClass(uint256 i) public view returns (Class memory) {
-      assert(i <= classes.length);
-
         return classes[i];
     }
 

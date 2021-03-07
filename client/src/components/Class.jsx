@@ -28,11 +28,11 @@ class Class extends React.Component {
       }).then(() => {
         this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
         this.Vibe.setProvider(web3.currentProvider);
-        this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {
+        this.Vibe.methods.isTeacher(this.state.id).call({ from: this.state.account }).then((r) => {
           if (r) {
             this.setState({hasAccess: true});
           } else {
-            this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.account }).then((r) => {
+            this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.state.account }).then((r) => {
               if (r) {
                 this.setState({hasAccess: true});
               }
@@ -49,11 +49,11 @@ class Class extends React.Component {
   async purchaseClass() {
     this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
     this.Vibe.setProvider(web3.currentProvider);
-    this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {
+    this.Vibe.methods.isTeacher(this.state.id).call({ from: this.state.account }).then((r) => {
       if (!r){
-        this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.account }).then((r) => {
+        this.Vibe.methods.hasPurchasedClass(this.state.id).call({ from: this.state.account }).then((r) => {
           if (!r) {
-            this.Vibe.methods.purchaseClass(this.state.id).send({ from: this.account, value: this.state.price, gas: 5000000 });
+            this.Vibe.methods.purchaseClass(this.state.id).send({ from: this.state.account, value: this.state.price, gas: 5000000 });
             }
           })
         }
