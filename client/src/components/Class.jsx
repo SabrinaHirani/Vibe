@@ -46,7 +46,7 @@ class Class extends React.Component {
 
   }
 
-  purchaseClass() {
+  async purchaseClass() {
     this.Vibe = new web3.eth.Contract(Vibe.abi, Vibe.address);
     this.Vibe.setProvider(web3.currentProvider);
     this.Vibe.methods.isTeacher(this.state.id).call({ from: this.account }).then((r) => {

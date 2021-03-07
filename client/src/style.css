@@ -146,6 +146,6 @@ body {
 }
 
 .class-purchase-class-action:hover, .class-purchase-class-action:focus, .class-purchase-class-action:active {
-  background-color: #fff;
-  color: #000;
+  background-color: #e3e3e3;
+  color: fff;
 }
